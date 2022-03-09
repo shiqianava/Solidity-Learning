@@ -138,3 +138,131 @@ hardhat在每次编译时会检查文件，如果距离上次编译没有任何�
 npx hardhat compile --force
 ```
 
+### 测试合约
+
+进入test文件夹，删除里面的sample-test.js，新建test.js：
+
+Hardhat默认的测试框架是Waffle，这东西普通的开发者可能之前没听说过（包括我），但是这个框架是基于大名鼎鼎的mocha和chai开发出来的。
+
+```javascript
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
+
+describe('合约基本测试', function () {
+  it('调用say方法，日志应该输出"Hello, world!"', async () => {
+    //返回一个HelloWorld合约的工厂promise
+    const HelloWorld = await ethers.getContractFactory('HelloWorld')
+    //开始部署合约并且返回实例化出来的合约对象的promise
+    const hw = await HelloWorld.deploy('Hello, world!')
+    //等待合约部署完毕
+    await hw.deployed()
+    //hw可以调用合约的成员方法，上面这一系列操作非常类似标准OOP中的实例化操作
+    expect(await hw.say()).to.equal('Hello, world!')
+  })
+})
+```
+
+运行命令：
+
+```
+npx hardhat test
+```
+
+![](D:\GitHub-Repository\Solidity-Learning\hardhat\images\hardhat-test.png)
+
+### 部署合约
+
+接下来我们准备部署合约。首先，进入 scripts文件夹，删除里面的文件，新建deploy.js
+
+```javascript
+const { ethers } = require('hardhat')
+
+const main = async () => {
+  //其实部署方法起来跟之前的测试完全一样
+  const HelloWorld = await ethers.getContractFactory('HelloWorld')
+  const hw = await HelloWorld.deploy('HelloWorld')
+  await hw.deployed()
+    
+  console.log('合约部署成功，地址:', hw.address)
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
+```
+
+接下来我们启动一下Hardhat Network，这是一个为开发而设计的本地以太坊网络。
+
+> ## Hardhat Network是如何工作的？
+>
+> - 它在收到每笔交易后，立即按顺序出块，没有任何延迟。
+> - 底层是基于 `@ethereumjs/vm` EVM 实现, 与ganache、Remix和Ethereum Studio 使用的相同EVM。
+> - 支持以下的硬分叉:
+>   - byzantium
+>   - constantinople
+>   - petersburg
+>   - istanbul
+>   - muirGlacier
+
+打开一个新终端，运行命令：
+
+```
+npx hardhat node
+```
+
+![](D:\GitHub-Repository\Solidity-Learning\hardhat\images\hardhat-network-start.png)
+
+> 它将启动Hardhat Network，并作为一个公开的JSON-RPC和WebSocket服务器。
+>
+> 然后，只要将钱包或应用程序连接到`http://localhost:8545` 。
+>
+> 如果你想把Hardhat连接到这个节点，你只需要使用`--network localhost`来运行命令。
+>
+> Hardhat Network默认用此状态初始化：
+>
+> - 一个全新的区块链，只是有创世区块。
+>
+> - 220个账户，每个账户有10000个ETH，助记词为:
+>
+>   ```
+>   "test test test test test test test test test test test junk"
+>   ```
+
+在原来的终端运行命令：
+
+```
+npx hardhat run --network localhost scripts/deploy.js
+```
+
+![](D:\GitHub-Repository\Solidity-Learning\hardhat\images\hardhat-contract-deploy.png)
+
+#### Fork 主网(运行不了，需要其他配置)
+
+> 你可以启动一个Fork主网的Hardhat Network实例。 Fork主网意思是模拟具有与主网相同的状态的网络，但它将作为本地开发网络工作。 这样你就可以与部署的协议进行交互，并在本地测试复杂的交互。
+>
+> 要使用此功能，你需要连接到存档节点。 建议使用[Alchemy](https://alchemyapi.io/?r=7d60e34c-b30a-4ffa-89d4-3c4efea4e14b)
+
+本地测试网络上除了你自己部署的合约，没有其他任何东西。如果想拿主网上的一些现成的东西测试你还需要自己部署，繁琐不说还非常容易出错。本地分叉主网可以使你的本地测试网络模拟主网状态，让你拥有主网上的合约、账户、ERC20 代币等。
+
+要使用Fork主网可以通过以下两种方法。
+
+第一种是直接加--fork参数，字符 “<” 和 “>” 表示占位符，需要加引号：
+
+```
+npx hardhat node --fork “https://eth-mainnet.alchemyapi.io/v2/<key>”
+```
+
+另一种是在hardhat.config.js进行配置，然后再启动节点，不需要加--fork参数：
+
+```
+networks: {
+  hardhat: {
+    forking: {
+      url: "https://eth-mainnet.alchemyapi.io/v2/<key>"
+    }
+  }
+}
+```
