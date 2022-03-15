@@ -1,4 +1,5 @@
-pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
 
 import 'hardhat/console.sol';
 
@@ -10,6 +11,7 @@ contract HelloWorld {
         message = _message;
     }
 
+    // view代表只读不可修改
     function say() public view  returns (string memory) { 
         console.log('Hello World!');
         return message;
