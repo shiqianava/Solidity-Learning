@@ -2,9 +2,9 @@
 pragma solidity ^0.8.10;
 
 /*
-    Constants
-    * Condstants are variables that cannot be modified.
-    * Their value hard coded and using constants can save gas cost. 可以节省gas
+Constants
+* Condstants are variables that cannot be modified.
+* Their value hard coded and using constants can save gas cost. 可以节省gas
 */
 
 contract Constants {

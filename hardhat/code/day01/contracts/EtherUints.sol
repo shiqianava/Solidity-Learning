@@ -2,12 +2,12 @@
 pragma solidity ^0.8.10;
 
 /* 
-    Ether and Wei
-    * Transaction are paid with ether.
-    * Similar to how one dollar is equal to 100 cent, one ether is equal to 10^18 wei.
+Ether and Wei
+* Transaction are paid with ether.
+* Similar to how one dollar is equal to 100 cent, one ether is equal to 10^18 wei.
 */
 
-constant EtherUints {
+contract EtherUints {
     uint public oneWei = 1 wei;
     // 1 wei is equal to 1
     bool public isOneWei = 1 wei == 1;
