@@ -10,7 +10,8 @@ memory：值传递
 storage：引用传递
 */
 import 'hardhat/console.sol';
-contract DataLocations {
+
+contract DataLocations { 
     uint[] public arr;
     mapping(uint => address) map;
     struct MyStruct {
@@ -18,16 +19,20 @@ contract DataLocations {
     }
     mapping(uint => MyStruct) myStructs;
 
-    // storage 存储于区块链上，只能在内部函数（internal）的参数上才能使用
+    // storage 存储于区块链上，如果要在参数上使用，只能在内部函数（internal）的参数上才能使用
     // memory 赋值给函数内的局部变量：在区块链中storage必须是静态分配存储空间的。函数内的局部变量虽然是一个storage的，但它仅仅是一个storage类型的指针。如果进行memory赋值给函数内的局部变量，实际会产生一个错误。
     constructor(uint[] memory _arr, address _addr, uint _foo) {
         // uint[] storage y = _arr;
         arr = _arr;
         map[1] = _addr;
         myStructs[1] = MyStruct(_foo);
+
         console.log(arr[0]);
         console.log(map[1]);
         console.log(myStructs[1].foo);
+    }
+    function getArr() public view returns (uint[] memory) {
+        return arr;
     }
 
     function f() public {
