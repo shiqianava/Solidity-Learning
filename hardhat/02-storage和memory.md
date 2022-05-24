@@ -102,7 +102,7 @@ Warning: Variable is declared as a storage pointer. Use an explicit "storage" ke
 
 **引用传递和值传递的比较**
 
-![](D:\GitHub-Repository\Solidity-Learning\hardhat\images\storage-memory-2.png)
+![](images\storage-memory-2.png)
 
 从上图可以知道：
 

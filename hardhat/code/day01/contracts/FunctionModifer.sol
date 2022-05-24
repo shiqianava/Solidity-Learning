@@ -1,4 +1,4 @@
-// SPDX-license-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
 /*
@@ -30,5 +30,27 @@ contract FunctionModifier {
     modifier validAddress(address _addr) {
         require(_addr != address(0), "Not valid address");
         _;
+    }
+
+    function changeOwner(address _newOwner) public onlyOwner validAddress(_newOwner) {
+        owner = _newOwner;
+    }
+
+    // 函数修饰符 可以在函数之前或之后调用
+    // 该修饰符 防止函数还在运行时被调用
+    // 当被修饰的函数被调用时，函数运行期间，不允许被二次调用，直到函数运行结束
+    modifier noReentrancy() {
+        require(!locked, "No reentrancy");
+
+        locked = true;
+        _;
+        locked = false;
+    }
+
+    function decrement(uint i) public noReentrancy {
+        x -= i;
+        if (i > 1) {
+            decrement(i - 1);
+        }
     }
 }
