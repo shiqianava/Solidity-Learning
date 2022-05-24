@@ -14,3 +14,26 @@ contract X {
         name = _name;
     }
 }
+
+contract Y {
+    string public text;
+    constructor(string memory _text) {
+        text = _text;
+    }
+}
+
+contract A is X("Input to X"), Y("Input to Y") {
+    
+}
+
+contract B is X, Y {
+    constructor(string memory _name, string memory _text) X(_name) Y(_text) { }
+}
+
+contract C is X, Y {
+    constructor() X("X was called") Y("Y was called") {}
+}
+
+contract D is X, Y {
+    constructor() Y("Y was called") X("X was called") {}
+}
