@@ -12,7 +12,7 @@ storage: 成员变量，可以跨函数调用，有点类似于硬盘；
 
 memory: 临时数据存储，类似于电脑的存储，函数的参数可以理解为memory类型；
 
-![](D:\GitHub-Repository\Solidity-Learning\hardhat\images\storage-memory-1.png)
+![](images\storage-memory-1.png)
 
 - memory：修饰的变量的数据存储在内存中；
 - storage：修饰的变量的数据将永久存储在区块链上。
