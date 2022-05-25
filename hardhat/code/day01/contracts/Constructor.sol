@@ -14,3 +14,28 @@ contract X {
         name = _name;
     }
 }
+// 基础合约 Y
+contract Y {
+    string public text;
+
+    constructor(string memory _text) {
+        text = _text;
+    }
+}
+// 有两种方法初始化父合约的参数
+contract B is X("Input to X"), Y("Input to Y") {
+
+}
+
+contract C is X, Y {
+    constructor(string memory _name, string memory _text) X(_name) Y(_text) {}
+}
+// 父合约参数初始化顺序可以和继承顺序不一样
+contract D is X, Y {
+    constructor() X("X was called") Y("Y was called") {}
+}
+
+
+contract E is X, Y {
+    constructor() Y("Y was called") X("X was called") {}
+}
