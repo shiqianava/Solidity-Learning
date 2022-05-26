@@ -56,9 +56,17 @@ contract E is C, B {
         return super.foo();
     }
 }
+<<<<<<< Updated upstream
 // Inheritance must be ordered from “most base-like” to “most derived”.
 // 继承顺序是从最基础的到最派生的，利用 树的广度优先搜索 进行
 // 在重写函数 override 时，交换A、B的顺序，因为 A 是 B 的父合约，编译时会抛出错误，如果是B、C就不会报错
+=======
+
+// Inheritance must be ordered from “most base-like” to “most derived”.
+// 上面这句话代表，继承顺序，必须是由继承树的顶部往下延伸
+// 比如 A 合约就是 most base-like （最基础），B 合约就是衍生合约
+// 在重写函数 override 时，交换A、B的顺序，编译时会抛出错误
+>>>>>>> Stashed changes
 contract F is A, B {
     function foo() public pure override(A, B) returns (string memory){
         // 沿着继承树，返回值 'A'
