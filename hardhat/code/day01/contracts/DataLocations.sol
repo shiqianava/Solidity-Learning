@@ -9,7 +9,8 @@ calldata：一般只有在外部函数（external）的参数被强制指定为c
 memory：值传递
 storage：引用传递
 */
-import 'hardhat/console.sol';
+import "hardhat/console.sol";
+
 
 contract DataLocations { 
     uint[] public arr;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
-import "hardhat/console.sol";
+import 'hardhat/console.sol';
 
 // Array can have a compile-time fixed size or a dynamic size
 /*
@@ -74,6 +74,7 @@ contract ArrayRemoveByShifting {
 
     function test() external {
         arr = [1, 2, 3, 4, 5];
+        console.log(arr[1]);
         remove(2);
         assert(arr[0] == 1);
         assert(arr[1] == 2);

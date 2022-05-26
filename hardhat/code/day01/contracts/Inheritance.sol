@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+<<<<<<< HEAD
+pragma solidity ^0.8.10;
+=======
 pragma solidity ^0.8.10;
 
 /*
@@ -62,3 +65,4 @@ contract F is A, B {
         return super.foo();
     }
 }
+>>>>>>> 21abba248ae590f174a7b822cf5a398289fcd77c
