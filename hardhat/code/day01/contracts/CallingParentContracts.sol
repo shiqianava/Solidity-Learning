@@ -1,12 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
-
-<<<<<<< HEAD
-contract A {
-    // This is called an event. You can emit events from your function
-    // and they are logged into the transaction log.
-    // In our case, this will be useful for tracing function calls.
-=======
 /* 继承树
   A
  /  \
@@ -19,7 +12,6 @@ contract A {
     // 这叫做事件，你可以从函数中发出事件
     // 他们可以被记录到区块链的交易日志中
     // 在以下的例子中，对跟踪函数调用非常有用
->>>>>>> e9e2749179e8b2f881b30a47731dd531285a9011
     event Log(string message);
 
     function foo() public virtual {
@@ -36,7 +28,6 @@ contract B is A {
         emit Log("B.foo called");
         A.foo();
     }
-<<<<<<< HEAD
 
     function bar() public virtual override {
         emit Log("B.bar called");
@@ -72,10 +63,3 @@ contract D is B, C {
         super.bar();
     }
 }
-=======
-    function bar() public virtual override {
-      emit Log("B.bar called");
-      A.bar();
-    }
-}
->>>>>>> e9e2749179e8b2f881b30a47731dd531285a9011
