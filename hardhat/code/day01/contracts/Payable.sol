@@ -9,7 +9,7 @@ Payable
 
 contract Payable {
     // payable 地址可以接收eth
-    address payable public owener;
+    address payable public owner;
 
     // payable 合约可以接收eth
     constructor() payable {
@@ -26,6 +26,18 @@ contract Payable {
 
     // 从合约中取出所有的eth
     function withdraw() public {
+        // 获取存储在合约中的eth数量
+        uint amount = address(this).balance;
         
+        // 发送所有的eth给owner
+        // 因为owner地址被定义为payable，所以owner可以接收eth
+        (bool success, ) = owner.call{value: amount}("");
+        require(success, "Fail to send Ether");
+    }
+
+    // 将eth从合约转到输入地址
+    function transfer(address payable _to, uint _amount) public {
+        (bool success, ) = _to.call{value: amount}("");
+        require(success, "Fail to send Ether");
     }
 }
