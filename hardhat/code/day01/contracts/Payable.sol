@@ -5,6 +5,7 @@ pragma solidity ^0.8.13;
 Payable
 
 声明 payable 的函数和地址可以接收 eth 进入合约
+函数要使用msg.value 和 callvalue()，就必须使用payable
 */
 
 contract Payable {
@@ -37,7 +38,13 @@ contract Payable {
 
     // 将eth从合约转到输入地址
     function transfer(address payable _to, uint _amount) public {
-        (bool success, ) = _to.call{value: amount}("");
-        require(success, "Fail to send Ether");
+        (bool success, ) = _to.call{value: _amount}("");
+        require(success, "Fail to send Ether"); 
+    }
+
+    // 函数要调用msg.value，就必须使用payable
+    function sendViaTransfer(address payable _to) public payable {
+        // 发送eth时，不建议使用该函数
+        _to.transfer(msg.value);
     }
 }

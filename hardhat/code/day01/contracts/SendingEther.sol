@@ -36,8 +36,34 @@ receive() exists?  fallback()
     receive()   fallback()
     */
     // 接收eth，msg.data必须为空
+    // 不能使用function关键字
     receive() external payable {}
 
     // 当msg.data不为空时，调用fallback
+    // 不能使用function关键字
     fallback() external payable{}
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}
+
+contract SendEther {
+    // 函数要调用msg.value，就必须使用payable
+    function sendViaTransfer(address payable _to) public payable {
+        // 发送eth时，不建议使用该函数
+        _to.transfer(msg.value);
+    }
+
+    function sendViaSend(address payable _to) public payable {
+        bool sent = _to.send(msg.value);
+        require(sent, "Fail to send Ether");
+    }
+
+    function sendViaCall(address payable _to) public payable {
+        // 返回的时memory类型的data数据，不能隐式转换为storage
+        // 所以使用memory修饰
+        (bool sent, bytes memory data) = _to.call{value: msg.value}("");
+        require(sent, "Failed to send Ether");
+    }
 }
