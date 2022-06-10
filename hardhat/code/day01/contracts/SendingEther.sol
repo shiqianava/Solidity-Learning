@@ -39,7 +39,7 @@ receive() exists?  fallback()
     // 不能使用function关键字
     receive() external payable {}
 
-    // 当msg.data不为空时，调用fallback
+    // 当msg.data不为空，或者receive()不存在时，调用fallback
     // 不能使用function关键字
     fallback() external payable{}
 
@@ -56,6 +56,8 @@ contract SendEther {
     }
 
     function sendViaSend(address payable _to) public payable {
+        // 返回一个bool值，表明成功或者失败
+        // 不推荐使用
         bool sent = _to.send(msg.value);
         require(sent, "Fail to send Ether");
     }
@@ -63,7 +65,9 @@ contract SendEther {
     function sendViaCall(address payable _to) public payable {
         // 返回的时memory类型的data数据，不能隐式转换为storage
         // 所以使用memory修饰
+        // 推荐使用
         (bool sent, bytes memory data) = _to.call{value: msg.value}("");
         require(sent, "Failed to send Ether");
     }
 }
+
