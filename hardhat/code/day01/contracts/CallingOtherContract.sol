@@ -16,7 +16,7 @@ contract Callee {
         return x;
     }
 
-    function setXandSendEther(uint _x) public returns(uint, uint) {
+    function setXandSendEther(uint _x) public payable returns(uint, uint) {
         x = _x;
         value = msg.value;
         return (x, value);
@@ -33,7 +33,7 @@ contract Caller {
         _callee.setX(_x);
     }
 
-    function setXandSendEther(Callee _callee, uint x) public {
+    function setXandSendEther(Callee _callee, uint _x) public payable{
         (uint x, uint value) = _callee.setXandSendEther{value: msg.value}(_x);
     }
 }
