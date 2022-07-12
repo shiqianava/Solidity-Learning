@@ -25,8 +25,18 @@ contract GasGolf {
     uint public total;
 
     // start - 没有优化gas的情况
-    // 传入数组，统计其中大于和小于99的数字的数量
-    function sunIfEvenAndLessThan99(uint[] memory nums) external {
-        for(uint i = 0)
-    }
+    // 传入数组，统计其中是偶数并且小于99的数字的和
+    // function sunIfEvenAndLessThan99(uint[] memory nums) external {
+    //     for(uint i = 0; i < nums.length; i += 1) {
+    //         bool isEven = nums[i] % 2 == 0;
+    //         bool isLessThan99 = nums[i] < 99;
+    //         if(isEven && isLessThan99) {
+    //             total += nums[i];
+    //         }
+    //     }
+    // }
+
+    // gas optimized
+    // [1, 2, 3, 4, 5, 100]
+    
 }
