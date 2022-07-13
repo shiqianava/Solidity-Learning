@@ -2,12 +2,14 @@
 pragma solidity ^0.8.10;
 
 /*
+Data Location只能为数组、结构或映射类型指定(array, string, struct, mapping)
+
 memory：修饰的变量的数据存储在内存中；
 storage：修饰的变量的数据将永久存储在区块链上。
 calldata：一般只有在外部函数（external）的参数被强制指定为calldata，这种数据位置是只读的，不会持久化到区块链中。
 函数的参数，函数的返回值的默认数据位置是memory，函数内局部变量的默认数据位置为storage。状态变量的默认数据位置是storage。
 memory：值传递
-storage：引用传递
+storage：指针传递
 */
 import "hardhat/console.sol";
 

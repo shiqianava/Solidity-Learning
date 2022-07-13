@@ -38,5 +38,25 @@ contract GasGolf {
 
     // gas optimized
     // [1, 2, 3, 4, 5, 100]
+    function sumIfEvenAndLessThan99(uint[] calldata nums) external {
+        // 将storage的状态变量，赋值给memory的局部变量
+        // 
+        uint _total = total; 
+        uint len = nums.length; // 需要的变量提前赋值？
+
+        for(uint i = 0; i < len;) {
+            uint num = nums[i];
+            if (num % 2 == 0 && num < 99) {
+                _total += num;
+            }
+
+            // "checked"（检查）模式。
+            // 算术运算，进行溢出检查，如果结果溢出，会出现失败异常回退。
+            unchecked { 
+                ++i;
+            }
+        }
+        total = _total;
+    }
     
 }
