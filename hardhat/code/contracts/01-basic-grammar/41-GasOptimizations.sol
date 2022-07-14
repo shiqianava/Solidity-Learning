@@ -4,11 +4,11 @@ pragma solidity ^0.8.10;
 
 /* 
 Gas Saving Techniques 节省gas的技术
-# 使用 calldata 代替 memory (只能在external修饰的函数中使用)
-# 加载状态变量 state variable 到 memory
-# 用 ++i 代替for循环 i++
-# 缓存数组元素
-# Short ciruit 短路
+1. 使用 calldata 代替 memory (只能在external修饰的函数中使用)
+2. 加载状态变量 state variable 到 memory
+3. 用 ++i 代替for循环 i++
+4. 缓存数组元素
+5. Short ciruit 短路
 */
 
 // gas golf

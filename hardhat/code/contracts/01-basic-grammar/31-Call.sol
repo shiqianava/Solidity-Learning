@@ -25,6 +25,7 @@ contract Caller {
     // 让我们假设，合约B不清楚合约A的源代码
     // 但是我们知道合约A的地址和调用的函数名和参数
     function testCallFoo(address payable _addr) public payable {
+        // 地址接收eth的同时，调用foo函数
         (bool success, bytes memory data) = _addr.call{value : msg.value}(
             abi.encodeWithSignature("foo(string, uint256)", "call foo", 123)
         );
